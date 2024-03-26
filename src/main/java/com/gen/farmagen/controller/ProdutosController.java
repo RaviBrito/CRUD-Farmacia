@@ -47,15 +47,11 @@ public class ProdutosController {
 	public ResponseEntity<List<Produtos>> getByTitulo(@PathVariable String nome){
 		return ResponseEntity.ok(produtosRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
-	@PostMapping
-	public ResponseEntity<Produtos> post(@Valid @RequestBody Produtos produtos){
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(produtosRepository.save(produtos));
-	}
+
 	@PutMapping
 	public ResponseEntity<Produtos> put (@Valid @RequestBody Produtos produtos){
 		return produtosRepository.findById(produtos.getId())
-				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(produtosRepository.save(produtos))
+				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(produtosRepository.save(produtos)))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 				
 	}

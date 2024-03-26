@@ -3,11 +3,13 @@ package com.gen.farmagen.model;
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,16 +29,20 @@ public class Produtos {
 	private String nome;
 
 	@NotBlank(message = "O atributo texto é Obrigatório!")
-	@Size(min = 10, max = 1000, message = "O atributo texto deve conter no mínimo 10 e no máximo 1000 caracteres")
+	@Size(min = 10, max = 5000, message = "O atributo texto deve conter no mínimo 10 e no máximo 1000 caracteres")
 	private String descricao;
-	
+
 	@Positive(message = "O preço deve ser maior do que zero")
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	@NotNull(message = "O atributo preço é Obrigatório")
 	private BigDecimal preco;
-	
+
 	@NotNull(message = "O atributo quantidade é Obrigatório!")
 	private Long quantidade;
+
+	@ManyToOne
+	@JsonIgnoreProperties("produtos")
+	private Categorias categorias;
 
 	public Long getId() {
 		return id;
@@ -77,9 +83,15 @@ public class Produtos {
 	public void setQuantidade(Long quantidade) {
 		this.quantidade = quantidade;
 	}
-	
-	
-	
-	
+
+	public Categorias getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(Categorias categorias) {
+		this.categorias = categorias;
+	}
+
 }
+
 	
